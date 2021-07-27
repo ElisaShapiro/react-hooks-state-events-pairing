@@ -6,6 +6,10 @@ function App() {
   const [upVotes, setUpVotes] = useState(video.upvotes)
   const [downVotes, setDownVotes] = useState(video.downvotes)
   const [showComments, setShowComments] = useState(true)
+  
+  const comments = video.comments.map(comment=>{
+    return {...comment, upvotes: 0, downvotes: 0}
+  })
 
   function clickUpVotes(){
     setUpVotes(upVotes + 1)
@@ -18,15 +22,14 @@ function App() {
     setShowComments(!showComments)
   }
 
-
   return (
     <div className="App">
       <iframe
         width="919"
         height="525"
         src={video.embedUrl}
-        frameborder="0"
-        allowfullscreen
+        frameBorder="0"
+        allowFullScreen
         title="Thinking in React"
       />
       <h1>{video.title}</h1>
@@ -36,7 +39,7 @@ function App() {
         <button onClick={clickDownVotes}>{downVotes}👎</button>
       </div>
       <button onClick={clickCommentSelector}>{showComments ? "Hide" : "Show"} Comments</button>
-      {showComments ? <Comments comments={video.comments}/> : null}
+      {showComments ? <Comments key={video.comments.id} comments={comments}/> : null}
     </div>
   );
 }
